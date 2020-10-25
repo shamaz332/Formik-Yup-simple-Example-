@@ -9,6 +9,16 @@ export const Form = () => {
     onSubmit: (values) => {
       console.log(values);
     },
+
+    validate: (values) => {
+      const error = {};
+      if (!values.name) {
+        error.name = "Name field is required";
+      } else if (values.name.length > 20) {
+        error.name = "Name field must be less than 20 character";
+      }
+      return error;
+    },
   });
 
   return (
@@ -24,7 +34,12 @@ export const Form = () => {
             onChange={formik.handleChange}
             value={formik.values.name}
           />
+
+          {formik.errors.name ? (
+            <div style={{ color: "red" }}>{formik.errors.name}</div>
+          ) : null}
         </div>
+
         <div>
           <label htmlFor="agw">Age : </label>
           <input
